@@ -6,6 +6,10 @@
   print-color-adjust: exact;
 }
 
+body {
+  @apply relative max-w-[1336px] h-[100vh] m-auto;
+}
+
 [contentEditable] {
   @apply hover:ring focus:ring ring-offset-4 outline-none ring-blue-500 transition-all;
 }

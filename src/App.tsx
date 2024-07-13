@@ -103,8 +103,8 @@ export const App = () => {
   }
 
   return (
-    <div className="relative p-5 max-w-[1336px] m-auto">
-      <div className="flex items-center gap-6">
+    <div className="p-5">
+      <div className="flex flex-wrap items-center justify-center sm:justify-start gap-6">
         <Avatar
           className="ml-3"
           image={image}
@@ -139,7 +139,7 @@ export const App = () => {
         </div>
       </div>
 
-      <div className="flex justify-around mt-10">
+      <div className="flex justify-around flex-wrap mt-10 gap-5 relative">
         {sections.map(section => (
           <div
             key={section.color}
@@ -167,10 +167,9 @@ export const App = () => {
             </div>
           </div>
         ))}
-      </div>
-
-      <div className="bg-black text-neutral-300 text-lg absolute right-10 mt-7 px-6 py-2 rounded-t-lg">
-        @taynafarria
+        <div className="bg-black text-neutral-300 text-lg absolute -bottom-20 right-3 mt-7 px-6 py-2 rounded-t-lg">
+          @taynafarria
+        </div>
       </div>
 
       <ImageCrop

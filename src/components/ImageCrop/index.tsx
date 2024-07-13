@@ -44,9 +44,9 @@ export const ImageCrop = (props: IImageCrop) => {
   return (
     <>
       {props.image && (
-        <div className="absolute z-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          <div className="flex flex-col items-center gap-5 p-3 rounded-md border bg-white drop-shadow-2xl">
-            <div className="relative w-[1200px] h-[800px]">
+        <div className="absolute z-10 w-1/2 h-1/2 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <div className="flex flex-col items-center gap-5 p-3 w-full h-full rounded-md border bg-white drop-shadow-2xl">
+            <div className="relative w-full h-full">
               <Cropper
                 image={props.image}
                 crop={crop}
