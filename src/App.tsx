@@ -103,7 +103,7 @@ export const App = () => {
   }
 
   return (
-    <div className="p-5 max-w-[1336px] m-auto">
+    <div className="relative p-5 max-w-[1336px] m-auto">
       <div className="flex items-center gap-6">
         <Avatar
           className="ml-3"
@@ -167,6 +167,10 @@ export const App = () => {
             </div>
           </div>
         ))}
+      </div>
+
+      <div className="bg-black text-neutral-300 text-lg absolute right-10 mt-7 px-6 py-2 rounded-t-lg">
+        @taynafarria
       </div>
 
       <ImageCrop
