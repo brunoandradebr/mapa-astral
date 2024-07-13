@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  print-color-adjust: exact;
+}
+
+[contentEditable] {
+  @apply hover:ring focus:ring ring-offset-4 outline-none ring-blue-500 transition-all;
+}
