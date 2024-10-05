@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { TField, useAppStore } from './store/app'
+
 import { Avatar } from './components/Avatar'
 import { ImageCrop } from './components/ImageCrop'
 
@@ -11,84 +13,41 @@ import insightsIcon from './assets/icons/icon-insights.png'
 
 const sections = [
   {
+    field: 'me',
     color: '#ff9200',
     title: 'Eu/ Individualidade',
     icon: meIcon,
-    text: `Um eu seguro, apreciador dos prazeres;
-          
-          Realizadora, perseverante e produtiva;
-          
-          Criativa ,encontra meios de obter prazer na rotina;
-          
-          Atenção à comunicação;
-          
-          Prefere o durável ao transitório;
-          
-          Desbravadora;
-          
-          Revolucionária;`,
   },
   {
+    field: 'relations',
     color: '#8700e6',
     title: 'Minhas Relações',
     icon: relationsIcon,
-    text: `Pré-disposição para cuidar;
-
-          Importante gerenciar expectativa e exercitar comunicação;
-
-          Atraída por pessoas organizadas, previsíveis e um tanto pragmáticas;
-
-          Necessidade de trocas construtivas e estimulantes;`,
   },
   {
+    field: 'emotional',
     color: '#6ad300',
     title: 'Meu Emocional',
     icon: emotionalIcon,
-    text: `Sensibilidade, intuição e coerência;
-
-          Sua criatividade vem das experiências vividas;
-
-          Tendencia a bloqueio emocional;
-
-          Objetiva e prática;
-
-          Transformação profunda no reconhecimento da impermanência da vida;`,
   },
   {
+    field: 'professional',
     color: '#004fce',
     title: 'Profissional/ Materialização',
     icon: professionalIcon,
-    text: `Autonomia e independência são indispensáveis;
-          
-          Habilidade para liderar;
-
-          Atenção aos impulsos;
-
-          Equilíbrio e respeito a si são importantes;
-
-          Alto poder de materialização;
-
-          Necessidade de se afirmar e exteriorizar sentimentos;`,
   },
   {
+    field: 'insights',
     color: '#ff008b',
     title: 'Insights',
     icon: insightsIcon,
-    text: `Se priorizar e estabelecer limites é muito importante;
-
-          Pensamento intuitivo e original;
-
-          A cobrança excessiva gera bloqueio na jornada;
-
-          Livre pensar, enxerga além;
-
-          Cuidado com bajulação;`,
   },
 ]
 
 export const App = () => {
-  const [image, setImage] = React.useState<string | null>()
   const [toBeCroppedImage, setToBeCroppedImage] = React.useState('')
+
+  const appStore = useAppStore()
 
   React.useEffect(() => {
     window.addEventListener('beforeunload', event => {
@@ -98,41 +57,58 @@ export const App = () => {
   }, [])
 
   const handleCropImage = (image: string) => {
-    setImage(image)
+    appStore.update('avatar', image)
     setToBeCroppedImage('')
   }
 
   return (
     <div className="p-5">
       <div className="flex flex-wrap items-center justify-center sm:justify-start gap-6">
-        <Avatar
-          className="ml-3"
-          image={image}
-          onChange={(file: string) => setToBeCroppedImage(file)}
-        />
+        <Avatar className="ml-3" image={appStore.avatar} onChange={(file: string) => setToBeCroppedImage(file)} />
 
         <div className="uppercase text-neutral-700 text-3xl">
           <div className="font-bold text-black">Mapa Astral</div>
           <div>
             <span
+              className={'font-bold pr-1 text-2xl'}
               contentEditable
               suppressContentEditableWarning={true}
-              className={'font-bold pr-1 text-2xl'}
+              onBlur={({ currentTarget }) => {
+                appStore.update('name', currentTarget.textContent)
+              }}
             >
-              Bruno Andrade
+              {appStore.name}
             </span>
             -
             <span className="px-1 text-2xl">
-              <span contentEditable suppressContentEditableWarning={true}>
-                Taurina
+              <span
+                contentEditable
+                suppressContentEditableWarning={true}
+                onBlur={({ currentTarget }) => {
+                  appStore.update('sign', currentTarget.textContent)
+                }}
+              >
+                {appStore.sign}
               </span>
               , de ascendente em{' '}
-              <span contentEditable suppressContentEditableWarning={true}>
-                sagitário
+              <span
+                contentEditable
+                suppressContentEditableWarning={true}
+                onBlur={({ currentTarget }) => {
+                  appStore.update('rising', currentTarget.textContent)
+                }}
+              >
+                {appStore.rising}
               </span>{' '}
               e lua em{' '}
-              <span contentEditable suppressContentEditableWarning={true}>
-                virgem
+              <span
+                contentEditable
+                suppressContentEditableWarning={true}
+                onBlur={({ currentTarget }) => {
+                  appStore.update('moon', currentTarget.textContent)
+                }}
+              >
+                {appStore.moon}
               </span>
             </span>
           </div>
@@ -141,10 +117,7 @@ export const App = () => {
 
       <div className="flex justify-around flex-wrap mt-10 gap-5 relative">
         {sections.map(section => (
-          <div
-            key={section.color}
-            className="flex flex-col items-center justify-start gap-2"
-          >
+          <div key={section.color} className="flex flex-col items-center justify-start gap-2">
             <span className="flex items-center justify-center uppercase font-bold text-center w-[180px] h-[40px]">
               {section.title}
             </span>
@@ -161,8 +134,11 @@ export const App = () => {
                 contentEditable
                 suppressContentEditableWarning={true}
                 className={'mt-5 text-pretty font-medium whitespace-pre-line'}
+                onBlur={({ currentTarget }) => {
+                  appStore.update(section.field as TField, currentTarget.textContent)
+                }}
               >
-                {section.text}
+                {appStore[section.field as TField]}
               </div>
             </div>
           </div>
@@ -172,11 +148,7 @@ export const App = () => {
         </div>
       </div>
 
-      <ImageCrop
-        image={toBeCroppedImage}
-        onCrop={handleCropImage}
-        onCancel={() => setToBeCroppedImage('')}
-      />
+      <ImageCrop image={toBeCroppedImage} onCrop={handleCropImage} onCancel={() => setToBeCroppedImage('')} />
     </div>
   )
 }

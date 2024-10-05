@@ -46,13 +46,12 @@ export default async function getCroppedImg(imageSrc: string, pixelCrop: Area) {
     0,
     0,
     pixelCrop.width,
-    pixelCrop.height,
+    pixelCrop.height
   )
 
-  // As a blob
+  // As a base64 string
   return new Promise<string>(resolve => {
-    croppedCanvas.toBlob(file => {
-      resolve(URL.createObjectURL(file as Blob))
-    }, 'image/jpeg')
+    const base64String = croppedCanvas.toDataURL()
+    resolve(base64String)
   })
 }
