@@ -135,7 +135,7 @@ export const App = () => {
                 suppressContentEditableWarning={true}
                 className={'mt-5 text-pretty font-medium whitespace-pre-line'}
                 onBlur={({ currentTarget }) => {
-                  appStore.update(section.field as TField, currentTarget.textContent)
+                  appStore.update(section.field as TField, currentTarget.innerText)
                 }}
               >
                 {appStore[section.field as TField]}
