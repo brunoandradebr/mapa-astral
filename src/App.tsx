@@ -4,6 +4,7 @@ import { TField, useAppStore } from './store/app'
 
 import { Avatar } from './components/Avatar'
 import { ImageCrop } from './components/ImageCrop'
+import { SectionEditable } from './components/SectionEditable'
 
 import meIcon from './assets/icons/icon-me.png'
 import relationsIcon from './assets/icons/icon-relations.png'
@@ -11,7 +12,7 @@ import emotionalIcon from './assets/icons/icon-emotional.png'
 import professionalIcon from './assets/icons/icon-professional.png'
 import insightsIcon from './assets/icons/icon-insights.png'
 
-const sections = [
+const sections: { field: TField; color: string; title: string; icon: string }[] = [
   {
     field: 'me',
     color: '#ff9200',
@@ -128,18 +129,12 @@ export const App = () => {
               }
               style={{ borderTopColor: `${section.color}` }}
             >
-              <img className="h-[48px]" src={section.icon} />
+              <img className="h-[48px] mb-5" src={section.icon} />
 
-              <div
-                contentEditable
-                suppressContentEditableWarning={true}
-                className={'mt-5 text-pretty font-medium whitespace-pre-line'}
-                onBlur={({ currentTarget }) => {
-                  appStore.update(section.field as TField, currentTarget.innerText)
-                }}
-              >
-                {appStore[section.field as TField]}
-              </div>
+              <SectionEditable
+                defaultValue={appStore[section.field]}
+                onBlur={text => appStore.update(section.field, text)}
+              />
             </div>
           </div>
         ))}

@@ -10,6 +10,21 @@ body {
   @apply relative max-w-[1336px] h-[100vh] m-auto;
 }
 
-[contentEditable] {
+[contentEditable],
+textarea {
   @apply hover:ring focus:ring ring-offset-4 outline-none ring-blue-500 transition-all;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.5);
 }
